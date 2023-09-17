@@ -1,35 +1,41 @@
 type Loction {
-  city: String
-  state: String
+  city: String!
+  state: String!
 }
 
 type Forecast {
-  location: Loction
-  temperature: String
-  temperatureUnit: String
+  location: Loction!
+  temperature: String!
+  temperatureUnit: String!
+}
+
+input Coords {
+  lat: String!
+  lng: String!
 }
 
 type CompactButton {
-  children: String
-}
-
-type OutlinedButton {
-  children: String
+  children: String!
   variant: String
 }
 
+type OutlinedButton {
+  children: String!
+  variant: String!
+}
+
 type Error {
-  message: String
+  message: String!
 }
 
 union WebButton = CompactButton | OutlinedButton | Error
 
 type CoordInput {
-  type: String
+  type: String!
 }
 
 type CombinedInput {
-  type: String
+  type: String!
 }
 
 union Inputs = CoordInput | CombinedInput
@@ -39,35 +45,35 @@ type Typography {
 }
 
 type LookupForm {
-  button: WebButton
-  formText: Typography
-  inputs: [Inputs]
+  button: WebButton!
+  formText: Typography!
+  inputs: [Inputs!]
 }
 
 type Results {
-  bodyText: Typography
-  errorText: Typography
-  loadingText: Typography
-  subText: Typography
+  bodyText: Typography!
+  errorText: Typography!
+  loadingText: Typography!
+  subText: Typography!
 }
 
 type AppBody1 {
-  type: String
+  type: String!
 }
 
 type AppBody2 {
-  type: String
+  type: String!
 }
 
 union AppBody = AppBody1 | AppBody2
 
 type WebApp {
-  appBody: AppBody
-  lookupForm: LookupForm
-  results: Results
+  appBody: AppBody!
+  lookupForm: LookupForm!
+  results: Results!
 }
 
 type Query {
-  app: WebApp
-  forecast: Forecast
+  app: WebApp!
+  forecast(coords: Coords!): Forecast
 }

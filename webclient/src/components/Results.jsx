@@ -58,14 +58,16 @@ const RESULTS_COMPONENTS = {
 function SDUIInnerText() {
   const { appData } = useAppContext();
   const { forecast, error, loading } = useForecastContext();
+
   const { __typename: bodyTextTypeName, ...bodyTextProps } =
     appData.results.bodyText;
-  const BodyText = RESULTS_COMPONENTS[bodyTextTypeName];
   const { __typename: errorTextTypeName, ...errorTextProps } =
     appData.results.errorText;
-  const ErrorText = RESULTS_COMPONENTS[errorTextTypeName];
   const { __typename: loadingTextTypeName, ...loadingTextProps } =
     appData.results.loadingText;
+
+  const BodyText = RESULTS_COMPONENTS[bodyTextTypeName];
+  const ErrorText = RESULTS_COMPONENTS[errorTextTypeName];
   const LoadingText = RESULTS_COMPONENTS[loadingTextTypeName];
 
   if (loading) {

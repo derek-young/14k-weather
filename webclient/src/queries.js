@@ -1,8 +1,8 @@
 import { gql, useQuery } from "@apollo/client";
 
 const GET_FORECAST = gql`
-  query GetForecast {
-    forecast {
+  query GetForecast($coords: Coords!) {
+    forecast(coords: $coords) {
       location {
         city
         state
@@ -13,7 +13,8 @@ const GET_FORECAST = gql`
   }
 `;
 
-export const useGetForecast = () => useQuery(GET_FORECAST);
+export const useGetForecast = (coords) =>
+  useQuery(GET_FORECAST, { variables: { coords } });
 
 const GET_APP_BODY = gql`
   query GetAppBody {

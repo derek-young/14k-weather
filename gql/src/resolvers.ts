@@ -43,7 +43,7 @@ const resolvers: Resolvers = {
     },
   },
   Query: {
-    app: (parent, args, contextValue, info) => {
+    app: (parent, args, contextValue) => {
       const now = contextValue.getDateNow();
 
       if (now % 2 === 0) {
@@ -78,19 +78,26 @@ const resolvers: Resolvers = {
         },
       };
     },
-    forecast: async () => {
+    forecast: async (parent, args) => {
       const pointData = (
-        await axios.get("https://api.weather.gov/points/40.0588,-105.1981")
+        await axios.get(
+          `https://api.weather.gov/points/${args.coords.lat},${args.coords.lng}`
+        )
       ).data;
+
+      if (!pointData) return null;
+
       let forecast;
 
-      if (pointData?.properties?.forecast) {
+      if (pointData.properties?.forecast) {
         forecast = (await axios.get(pointData.properties.forecastHourly)).data;
       }
 
+      if (!forecast) return null;
+
       const locationProperties =
         pointData.properties.relativeLocation.properties;
-      const nextPeriodData = forecast?.properties.periods[0];
+      const nextPeriodData = forecast.properties.periods[0];
 
       return {
         location: {

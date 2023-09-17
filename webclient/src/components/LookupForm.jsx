@@ -14,13 +14,13 @@ const Form = styled.form`
 `;
 
 export function LookupForm() {
-  const { coords } = useForecastContext();
+  const { updateSubmittedCoords } = useForecastContext();
 
   return (
     <Form
       onSubmit={(e) => {
         e.preventDefault();
-        console.log("submitted", coords);
+        updateSubmittedCoords();
       }}
     >
       <Typography>Look up temp:</Typography>
@@ -42,6 +42,7 @@ const LOOKUP_FORM_COMPONENTS = {
 export function SDUILookupForm() {
   const { appData } = useAppContext();
   const { coords } = useForecastContext();
+
   const { __typename: buttonTypeName, ...buttonProps } =
     appData.lookupForm.button;
   const { __typename: formTextTypeName, ...formTextProps } =
@@ -58,10 +59,10 @@ export function SDUILookupForm() {
       }}
     >
       <FormText {...formTextProps}>Look up temp:</FormText>
-      {appData.lookupForm.inputs.map(({ __typename, ...props }) => {
+      {appData.lookupForm.inputs.map(({ __typename, ...props }, i) => {
         const Component = LOOKUP_FORM_COMPONENTS[__typename];
 
-        return <Component {...props} />;
+        return <Component key={i} {...props} />;
       })}
       <ButtonComponent type="submit" {...buttonProps} />
     </Form>
