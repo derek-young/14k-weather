@@ -55,10 +55,10 @@ const resolvers: Resolvers = {
             inputs: [{ type: "combined" }],
           },
           results: {
-            bodyText: { variant: "h2" },
-            errorText: { variant: "h4" },
-            loadingText: { variant: "h4" },
-            subText: { variant: "h4" },
+            bodyText: { variant: "h5" },
+            errorText: { variant: "h5" },
+            loadingText: { variant: "h5" },
+            subText: { variant: "h3" },
           },
         };
       }
