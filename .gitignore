@@ -13,6 +13,9 @@
 /gql/dist
 /webclient/build
 
+# generated
+/gql/src/__generated__
+
 # misc
 .DS_Store
 .env.local
