@@ -1,9 +1,13 @@
+import { Typography } from "@mui/material";
+
 import "./App.css";
 import { AppContextProvider } from "./AppContext";
+import { useGetAppBody } from "./queries";
+
 import LookupForm from "./components/LookupForm";
 import Results from "./components/Results";
 
-function AppBody() {
+function TraditionalAppBody() {
   return (
     <div className="App-body">
       <LookupForm />
@@ -12,11 +16,19 @@ function AppBody() {
   );
 }
 
+function SduiAppBody() {
+  const { data, error, loading } = useGetAppBody();
+  return <div>foo</div>;
+}
+
 function App() {
   return (
     <div className="App">
       <AppContextProvider>
-        <AppBody />
+        <Typography variant="h5">Traditional Rendering</Typography>
+        <TraditionalAppBody />
+        <Typography variant="h5">SDUI</Typography>
+        <SduiAppBody />
       </AppContextProvider>
     </div>
   );

@@ -25,7 +25,8 @@ function InnerText() {
 
   return (
     <Typography variant="h3">
-      Temperature in {data.forecast.location}:
+      Temperature in {data.forecast.location.city},{" "}
+      {data.forecast.location.state}:
     </Typography>
   );
 }

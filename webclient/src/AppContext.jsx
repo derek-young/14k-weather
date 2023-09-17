@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useState } from "react";
 
-import useGetForecast from "./queries/useGetForecast";
+import { useGetForecast } from "./queries";
 
 const DEFAULT = {
   coords: { lat: 40.0588, lng: -105.1981 },
