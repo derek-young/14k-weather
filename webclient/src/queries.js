@@ -17,8 +17,15 @@ export const useGetForecast = () => useQuery(GET_FORECAST);
 
 const GET_APP_BODY = gql`
   query GetAppBody {
-    app {
-      content
+    items {
+      __typename
+      ... on Button {
+        children
+        variant
+      }
+      ... on Error {
+        message
+      }
     }
   }
 `;

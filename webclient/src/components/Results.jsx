@@ -40,7 +40,11 @@ function Results() {
         <InnerText />
       </StyledHeader>
       <StyledBody>
-        {data && <Typography variant="h5">{data.forecast.text}</Typography>}
+        {data && (
+          <Typography variant="h5">
+            {data.forecast.temperature} degrees {data.forecast.temperatureUnit}
+          </Typography>
+        )}
       </StyledBody>
     </>
   );

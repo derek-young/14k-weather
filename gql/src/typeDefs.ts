@@ -14,9 +14,21 @@ const typeDefs = `#graphql
     temperatureUnit: String
   }
 
+  type Button {
+    children: String
+    variant: String
+  }
+
+  type Error {
+    message: String
+  }
+
+  union WebItems = Button | Error
+
   # The "Query" type is special: it lists all of the available queries that
   # clients can execute, along with the return type for each.
   type Query {
+    items: [WebItems]
     forecast: Forecast
   }
 `;

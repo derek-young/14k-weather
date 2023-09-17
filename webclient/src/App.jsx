@@ -4,6 +4,7 @@ import "./App.css";
 import { AppContextProvider } from "./AppContext";
 import { useGetAppBody } from "./queries";
 
+import Button from "./components/Button";
 import LookupForm from "./components/LookupForm";
 import Results from "./components/Results";
 
@@ -16,9 +17,26 @@ function TraditionalAppBody() {
   );
 }
 
+const TYPE_COMPONENTS = {
+  Button: Button,
+};
+
 function SduiAppBody() {
   const { data, error, loading } = useGetAppBody();
-  return <div>foo</div>;
+
+  if (loading) {
+    return <Typography>Loading...</Typography>;
+  }
+
+  if (error) {
+    return <Typography>An Error Occurred</Typography>;
+  }
+
+  return data.items.map(({ __typename, ...rest }, i) => {
+    const Component = TYPE_COMPONENTS[__typename];
+
+    return <Component key={i} {...rest} />;
+  });
 }
 
 function App() {

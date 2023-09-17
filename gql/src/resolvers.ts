@@ -1,7 +1,25 @@
 import axios from "axios";
 
 const resolvers = {
+  WebItems: {
+    __resolveType: (obj) => {
+      if (obj.variant) {
+        return "Button";
+      }
+
+      return null;
+    },
+  },
   Query: {
+    items: (parent, args, contextValue, info) => {
+      const now = contextValue.getDateNow();
+
+      if (now % 2 === 0) {
+        return [{ children: "Let's Go", variant: "contained" }];
+      }
+
+      return [{ children: "Go", variant: "outlined" }];
+    },
     forecast: async () => {
       const pointData = (
         await axios.get("https://api.weather.gov/points/40.0588,-105.1981")
