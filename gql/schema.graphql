@@ -1,0 +1,69 @@
+type Loction {
+  city: String
+  state: String
+}
+
+type Forecast {
+  location: Loction
+  temperature: String
+  temperatureUnit: String
+}
+
+type Button {
+  children: String
+  variant: String
+}
+
+type Error {
+  message: String
+}
+
+union WebButton = Button | Error
+
+type CoordInput {
+  type: String
+}
+
+type CombinedInput {
+  type: String
+}
+
+union Inputs = CoordInput | CombinedInput
+
+type Typography {
+  variant: String
+}
+
+type LookupForm {
+  button: WebButton
+  formText: Typography
+  inputs: [Inputs]
+}
+
+type Results {
+  bodytext: Typography
+  errorText: Typography
+  loadingText: Typography
+  subText: Typography
+}
+
+type AppBody1 {
+  type: String
+}
+
+type AppBody2 {
+  type: String
+}
+
+union AppBody = AppBody1 | AppBody2
+
+type WebApp {
+  appBody: AppBody
+  lookupForm: LookupForm
+  results: Results
+}
+
+type Query {
+  app: WebApp
+  forecast: Forecast
+}

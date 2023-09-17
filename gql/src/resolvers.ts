@@ -1,9 +1,37 @@
 import axios from "axios";
 
-const resolvers = {
-  WebItems: {
+import { Resolvers } from "./__generated__/resolvers-types";
+
+const resolvers: Resolvers = {
+  AppBody: {
     __resolveType: (obj) => {
-      if (obj.variant) {
+      if (obj.type === "AppBody1") {
+        return "AppBody1";
+      }
+
+      if (obj.type === "AppBody2") {
+        return "AppBody2";
+      }
+
+      return null;
+    },
+  },
+  Inputs: {
+    __resolveType: (obj) => {
+      if (obj.type === "lat" || obj.type === "lng") {
+        return "CoordInput";
+      }
+
+      if (obj.type === "combined") {
+        return "CombinedInput";
+      }
+
+      return null;
+    },
+  },
+  WebButton: {
+    __resolveType: (obj) => {
+      if ("variant" in obj) {
         return "Button";
       }
 
@@ -11,14 +39,40 @@ const resolvers = {
     },
   },
   Query: {
-    items: (parent, args, contextValue, info) => {
+    app: (parent, args, contextValue, info) => {
       const now = contextValue.getDateNow();
 
       if (now % 2 === 0) {
-        return [{ children: "Let's Go", variant: "contained" }];
+        return {
+          appBody: { type: "AppBody1" },
+          lookupForm: {
+            button: { children: "Let's Go", variant: "contained" },
+            formText: { variant: "subtitle2" },
+            inputs: [{ type: "combined" }],
+          },
+          results: {
+            bodytext: { variant: "h2" },
+            errorText: { variant: "h4" },
+            loadingText: { variant: "h4" },
+            subText: { variant: "h4" },
+          },
+        };
       }
 
-      return [{ children: "Go", variant: "outlined" }];
+      return {
+        appBody: { type: "AppBody2" },
+        lookupForm: {
+          button: { children: "Go", variant: "outlined" },
+          formText: { variant: undefined },
+          inputs: [{ type: "lat" }, { type: "lng" }],
+        },
+        results: {
+          bodytext: { variant: "h3" },
+          errorText: { variant: "h5" },
+          loadingText: { variant: "h5" },
+          subText: { variant: "h5" },
+        },
+      };
     },
     forecast: async () => {
       const pointData = (
