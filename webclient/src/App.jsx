@@ -1,28 +1,27 @@
 import { Typography } from "@mui/material";
 
 import "./App.css";
-import { AppContextProvider } from "./AppContext";
-import { useGetAppBody } from "./queries";
+import { AppContextProvider, useAppContext } from "./AppContext";
 
-import Button from "./components/Button";
-import LookupForm from "./components/LookupForm";
-import Results from "./components/Results";
+import { LookupForm, SDUILookupForm } from "./components/LookupForm";
+import { Results, SDUIResults } from "./components/Results";
+import { ForecastContextProvider } from "./ForecastContext";
 
-function TraditionalAppBody() {
-  return (
-    <div className="App-body">
-      <LookupForm />
-      <Results />
-    </div>
-  );
+function AppBody1(props) {
+  return <div className="App-body-1" {...props} />;
 }
 
-const TYPE_COMPONENTS = {
-  Button: Button,
+function AppBody2(props) {
+  return <div className="App-body-2" {...props} />;
+}
+
+const APP_BODY_COMPONENTS = {
+  AppBody1: AppBody1,
+  AppBody2: AppBody2,
 };
 
-function SduiAppBody() {
-  const { data, error, loading } = useGetAppBody();
+function SDUIAppBody() {
+  const { appData, error, loading } = useAppContext();
 
   if (loading) {
     return <Typography>Loading...</Typography>;
@@ -32,23 +31,31 @@ function SduiAppBody() {
     return <Typography>An Error Occurred</Typography>;
   }
 
-  return data.items.map(({ __typename, ...rest }, i) => {
-    const Component = TYPE_COMPONENTS[__typename];
+  const AppBody = APP_BODY_COMPONENTS[appData.appBody.__typename];
 
-    return <Component key={i} {...rest} />;
-  });
+  return (
+    <AppBody>
+      <SDUILookupForm />
+      <SDUIResults />
+    </AppBody>
+  );
 }
 
 function App() {
   return (
-    <div className="App">
-      <AppContextProvider>
-        <Typography variant="h5">Traditional Rendering</Typography>
-        <TraditionalAppBody />
-        <Typography variant="h5">SDUI</Typography>
-        <SduiAppBody />
-      </AppContextProvider>
-    </div>
+    <AppContextProvider>
+      <ForecastContextProvider>
+        <div className="App">
+          <Typography variant="h5">Traditional Rendering</Typography>
+          <AppBody1>
+            <LookupForm />
+            <Results />
+          </AppBody1>
+          <Typography variant="h5">SDUI</Typography>
+          <SDUIAppBody />
+        </div>
+      </ForecastContextProvider>
+    </AppContextProvider>
   );
 }
 

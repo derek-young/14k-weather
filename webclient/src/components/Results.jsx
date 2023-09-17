@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
-import { useAppContext } from "../AppContext";
 import styled from "@emotion/styled";
+
+import { useForecastContext } from "../ForecastContext";
 
 const StyledHeader = styled.div`
   display: flex;
@@ -13,7 +14,7 @@ const StyledBody = styled.div`
 `;
 
 function InnerText() {
-  const { data, error, loading } = useAppContext();
+  const { forecast, error, loading } = useForecastContext();
 
   if (loading) {
     return <Typography variant="h5">Loading...</Typography>;
@@ -25,14 +26,13 @@ function InnerText() {
 
   return (
     <Typography variant="h3">
-      Temperature in {data.forecast.location.city},{" "}
-      {data.forecast.location.state}:
+      Temperature in {forecast.location.city}, {forecast.location.state}:
     </Typography>
   );
 }
 
-function Results() {
-  const { data } = useAppContext();
+export function Results() {
+  const { forecast } = useForecastContext();
 
   return (
     <>
@@ -40,9 +40,9 @@ function Results() {
         <InnerText />
       </StyledHeader>
       <StyledBody>
-        {data && (
+        {forecast && (
           <Typography variant="h5">
-            {data.forecast.temperature} degrees {data.forecast.temperatureUnit}
+            {forecast.temperature} degrees {forecast.temperatureUnit}
           </Typography>
         )}
       </StyledBody>
@@ -50,4 +50,21 @@ function Results() {
   );
 }
 
-export default Results;
+export function SDUIResults() {
+  const { forecast } = useForecastContext();
+
+  return (
+    <>
+      <StyledHeader>
+        <InnerText />
+      </StyledHeader>
+      <StyledBody>
+        {forecast && (
+          <Typography variant="h5">
+            {forecast.temperature} degrees {forecast.temperatureUnit}
+          </Typography>
+        )}
+      </StyledBody>
+    </>
+  );
+}

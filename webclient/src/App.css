@@ -13,9 +13,21 @@
   }
 }
 
-.App-body {
+.App-body-1 {
   background-color: #282c34;
-  min-height: calc(50vh - 32px);
+  min-height: calc(50vh - 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding: 24px;
+}
+
+.App-body-2 {
+  background-color: deepskyblue;
+  min-height: calc(50vh - 80px);
   display: flex;
   flex-direction: column;
   align-items: center;

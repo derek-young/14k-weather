@@ -17,14 +17,53 @@ export const useGetForecast = () => useQuery(GET_FORECAST);
 
 const GET_APP_BODY = gql`
   query GetAppBody {
-    items {
-      __typename
-      ... on Button {
-        children
-        variant
+    app {
+      appBody {
+        __typename
       }
-      ... on Error {
-        message
+      lookupForm {
+        button {
+          __typename
+          ... on Button {
+            children
+            variant
+          }
+          ... on Error {
+            message
+          }
+        }
+        formText {
+          __typename
+          variant
+        }
+        inputs {
+          ... on CoordInput {
+            __typename
+            type
+          }
+          ... on CombinedInput {
+            __typename
+            type
+          }
+        }
+      }
+      results {
+        bodytext {
+          __typename
+          variant
+        }
+        errorText {
+          __typename
+          variant
+        }
+        loadingText {
+          __typename
+          variant
+        }
+        subText {
+          __typename
+          variant
+        }
       }
     }
   }

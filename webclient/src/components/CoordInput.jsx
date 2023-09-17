@@ -1,8 +1,9 @@
 import { Input } from "@mui/material";
-import { useAppContext } from "../AppContext";
+
+import { useForecastContext } from "../ForecastContext";
 
 function CoordInput({ type }) {
-  const { coords, setCoords } = useAppContext();
+  const { coords, setCoords } = useForecastContext();
 
   const onChange = (e) => {
     if (e.target.value === "") return setCoords((c) => ({ ...c, [type]: "" }));

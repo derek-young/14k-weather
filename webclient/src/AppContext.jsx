@@ -1,11 +1,11 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useMemo } from "react";
 
-import { useGetForecast } from "./queries";
+import { useGetAppBody } from "./queries";
 
 const DEFAULT = {
   coords: { lat: 40.0588, lng: -105.1981 },
   setCoords: () => {},
-  data: undefined,
+  appData: undefined,
   loading: false,
   error: undefined,
 };
@@ -15,18 +15,15 @@ const AppContext = createContext(DEFAULT);
 export const useAppContext = () => useContext(AppContext);
 
 export function AppContextProvider(props) {
-  const { data, error, loading } = useGetForecast();
-  const [coords, setCoords] = useState({ lat: 40.0588, lng: -105.1981 });
+  const { data: { app: appData } = {}, error, loading } = useGetAppBody();
 
   const value = useMemo(
     () => ({
-      coords,
-      setCoords,
-      data,
+      appData,
       error,
       loading,
     }),
-    [coords, data, error, loading]
+    [appData, error, loading]
   );
 
   return <AppContext.Provider value={value} {...props} />;
