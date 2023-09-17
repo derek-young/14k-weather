@@ -1,13 +1,6 @@
 import { createContext, useContext, useMemo, useState } from "react";
-import { gql, useQuery } from "@apollo/client";
 
-const GET_FORECAST = gql`
-  query GetForecast {
-    forecast {
-      text
-    }
-  }
-`;
+import useGetForecast from "./queries/useGetForecast";
 
 const DEFAULT = {
   coords: { lat: 40.0588, lng: -105.1981 },
@@ -22,16 +15,18 @@ const AppContext = createContext(DEFAULT);
 export const useAppContext = () => useContext(AppContext);
 
 export function AppContextProvider(props) {
-  const getForecastQuery = useQuery(GET_FORECAST);
+  const { data, error, loading } = useGetForecast();
   const [coords, setCoords] = useState({ lat: 40.0588, lng: -105.1981 });
 
   const value = useMemo(
     () => ({
       coords,
       setCoords,
-      ...getForecastQuery,
+      data,
+      error,
+      loading,
     }),
-    [getForecastQuery, coords]
+    [coords, data, error, loading]
   );
 
   return <AppContext.Provider value={value} {...props} />;

@@ -1,24 +1,13 @@
-import { Typography } from "@mui/material";
 import "./App.css";
-import { AppContextProvider, useAppContext } from "./AppContext";
+import { AppContextProvider } from "./AppContext";
 import LookupForm from "./components/LookupForm";
+import Results from "./components/Results";
 
 function AppBody() {
-  const { data, error, loading } = useAppContext();
-
   return (
     <div className="App-body">
       <LookupForm />
-      <Typography sx={{ margin: 4 }} variant="h3">
-        Temperature in 80301:
-      </Typography>
-      <Typography variant="h5">
-        {loading
-          ? "Loading..."
-          : error
-          ? "Error fetching forecast"
-          : data.forecast.text}
-      </Typography>
+      <Results />
     </div>
   );
 }
