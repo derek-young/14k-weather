@@ -11,7 +11,7 @@
 
 # production
 /gql/dist
-/webclient/public
+/webclient/build
 
 # misc
 .DS_Store
