@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import styled from "@emotion/styled";
 
+import { useAppContext } from "../AppContext";
 import { useForecastContext } from "../ForecastContext";
 
 const StyledHeader = styled.div`
@@ -50,19 +51,55 @@ export function Results() {
   );
 }
 
+const RESULTS_COMPONENTS = {
+  Typography: Typography,
+};
+
+function SDUIInnerText() {
+  const { appData } = useAppContext();
+  const { forecast, error, loading } = useForecastContext();
+  const { __typename: bodyTextTypeName, ...bodyTextProps } =
+    appData.results.bodyText;
+  const BodyText = RESULTS_COMPONENTS[bodyTextTypeName];
+  const { __typename: errorTextTypeName, ...errorTextProps } =
+    appData.results.errorText;
+  const ErrorText = RESULTS_COMPONENTS[errorTextTypeName];
+  const { __typename: loadingTextTypeName, ...loadingTextProps } =
+    appData.results.loadingText;
+  const LoadingText = RESULTS_COMPONENTS[loadingTextTypeName];
+
+  if (loading) {
+    return <LoadingText {...loadingTextProps}>Loading...</LoadingText>;
+  }
+
+  if (error) {
+    return <ErrorText {...errorTextProps}>Error fetching forecast</ErrorText>;
+  }
+
+  return (
+    <BodyText {...bodyTextProps}>
+      Temperature in {forecast.location.city}, {forecast.location.state}:
+    </BodyText>
+  );
+}
+
 export function SDUIResults() {
+  const { appData } = useAppContext();
   const { forecast } = useForecastContext();
+  const { __typename: subTextTypeName, ...subTextProps } =
+    appData.results.subText;
+  const SubText = RESULTS_COMPONENTS[subTextTypeName];
 
   return (
     <>
       <StyledHeader>
-        <InnerText />
+        <SDUIInnerText />
       </StyledHeader>
       <StyledBody>
         {forecast && (
-          <Typography variant="h5">
+          <SubText {...subTextProps}>
             {forecast.temperature} degrees {forecast.temperatureUnit}
-          </Typography>
+          </SubText>
         )}
       </StyledBody>
     </>

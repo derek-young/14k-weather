@@ -9,7 +9,11 @@ type Forecast {
   temperatureUnit: String
 }
 
-type Button {
+type CompactButton {
+  children: String
+}
+
+type OutlinedButton {
   children: String
   variant: String
 }
@@ -18,7 +22,7 @@ type Error {
   message: String
 }
 
-union WebButton = Button | Error
+union WebButton = CompactButton | OutlinedButton | Error
 
 type CoordInput {
   type: String
@@ -41,7 +45,7 @@ type LookupForm {
 }
 
 type Results {
-  bodytext: Typography
+  bodyText: Typography
   errorText: Typography
   loadingText: Typography
   subText: Typography

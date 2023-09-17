@@ -24,9 +24,11 @@ const GET_APP_BODY = gql`
       lookupForm {
         button {
           __typename
-          ... on Button {
+          ... on CompactButton {
             children
-            variant
+          }
+          ... on OutlinedButton {
+            children
           }
           ... on Error {
             message
@@ -48,7 +50,7 @@ const GET_APP_BODY = gql`
         }
       }
       results {
-        bodytext {
+        bodyText {
           __typename
           variant
         }

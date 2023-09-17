@@ -31,8 +31,12 @@ const resolvers: Resolvers = {
   },
   WebButton: {
     __resolveType: (obj) => {
+      if ("variant" in obj && obj.variant === "outlined") {
+        return "OutlinedButton";
+      }
+
       if ("variant" in obj) {
-        return "Button";
+        return "CompactButton";
       }
 
       return null;
@@ -44,14 +48,14 @@ const resolvers: Resolvers = {
 
       if (now % 2 === 0) {
         return {
-          appBody: { type: "AppBody1" },
+          appBody: { type: "AppBody2" },
           lookupForm: {
-            button: { children: "Let's Go", variant: "contained" },
+            button: { children: "Let's Go", variant: "outlined" },
             formText: { variant: "subtitle2" },
             inputs: [{ type: "combined" }],
           },
           results: {
-            bodytext: { variant: "h2" },
+            bodyText: { variant: "h2" },
             errorText: { variant: "h4" },
             loadingText: { variant: "h4" },
             subText: { variant: "h4" },
@@ -60,14 +64,14 @@ const resolvers: Resolvers = {
       }
 
       return {
-        appBody: { type: "AppBody2" },
+        appBody: { type: "AppBody1" },
         lookupForm: {
-          button: { children: "Go", variant: "outlined" },
+          button: { children: "Go", variant: "contained" },
           formText: { variant: undefined },
           inputs: [{ type: "lat" }, { type: "lng" }],
         },
         results: {
-          bodytext: { variant: "h3" },
+          bodyText: { variant: "h3" },
           errorText: { variant: "h5" },
           loadingText: { variant: "h5" },
           subText: { variant: "h5" },
