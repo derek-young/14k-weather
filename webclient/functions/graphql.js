@@ -12,7 +12,10 @@ const handler = async (event) => {
           headers: { "Content-Type": "application/json" },
         });
 
-        return response;
+        return {
+          body: JSON.stringify(response.data),
+          statusCode: 200,
+        };
       }
 
       throw new Error("Unknown request");
