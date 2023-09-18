@@ -6,8 +6,11 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+const GRAPH_QL =
+  process.env.NODE_ENV === "development" ? "http://localhost:4000" : "/graphql";
+
 const client = new ApolloClient({
-  uri: "http://localhost:4000/",
+  uri: GRAPH_QL,
   cache: new InMemoryCache(),
 });
 
