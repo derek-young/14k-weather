@@ -6,18 +6,15 @@ const handler = async (event) => {
   try {
     if (event.path === "/.netlify/functions/graphql") {
       if (event.httpMethod === "POST") {
-        console.log("event.body", event.body);
         const response = await fetch(BACKEND, {
           method: "post",
           body: event.body,
           headers: { "Content-Type": "application/json" },
         });
-        console.log("response", response);
         const body = await response.json();
-        console.log("body", body);
 
         return {
-          body,
+          body: JSON.stringify(body),
           statusCode: 200,
         };
       }
