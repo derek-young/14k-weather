@@ -1,12 +1,8 @@
 import { Input } from "@mui/material";
 
-import { useForecastContext } from "../ForecastContext";
-
 function CombinedInput() {
-  const { coords, setCoords } = useForecastContext();
-
   const onChange = (e) => {
-    console.log("e.target.value");
+    console.log("e.target.value", e.target.value);
   };
 
   return (
