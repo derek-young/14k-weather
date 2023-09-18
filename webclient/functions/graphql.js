@@ -13,8 +13,13 @@ const handler = async (event) => {
           headers: { "Content-Type": "application/json" },
         });
         console.log("response", response);
+        const body = await response.json();
+        console.log("body", body);
 
-        return response.json();
+        return {
+          body,
+          statusCode: 200,
+        };
       }
 
       throw new Error("Unknown request");
