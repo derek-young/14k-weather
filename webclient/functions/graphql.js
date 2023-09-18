@@ -13,12 +13,8 @@ const handler = async (event) => {
           headers: { "Content-Type": "application/json" },
         });
         console.log("response", response);
-        console.log("response.data", response.data);
 
-        return {
-          body: JSON.stringify(response.data),
-          statusCode: 200,
-        };
+        return response.json();
       }
 
       throw new Error("Unknown request");
