@@ -7,7 +7,9 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 const GRAPH_QL =
-  process.env.NODE_ENV === "development" ? "http://localhost:4000" : "/graphql";
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "/.netlify/functions/graphql";
 
 const client = new ApolloClient({
   uri: GRAPH_QL,
